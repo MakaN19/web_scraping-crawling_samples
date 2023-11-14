@@ -62,7 +62,6 @@ class FakeBookstoreCrawlerPipeline:
         self.db_.close_conection()
 
     def process_item(self, item: dict, spider: CrawlSpider) -> None:
-        logging.info(item)
         self.db_.execute_query(
             """INSERT INTO items (title, price)
                VALUES ("{title}", "{price}");""".format(title=item["title"], price=item["price"]))
