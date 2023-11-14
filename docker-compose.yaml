@@ -6,10 +6,10 @@ services:
     restart: always
     user: 'mysql:mysql' # for permission issue
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: $USER
-      MYSQL_PASSWORD: $PASSWORD
-      MYSQL_ROOT_PASSWORD: $ROOT_PASSWORD
+      MYSQL_DATABASE: SDB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWD
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWD
     ports:
       - '3306:3306'
     expose:

@@ -31,14 +31,14 @@ class MySQLDB:
             port=3306,
             unix_socket="")
 
-    def close_conection(self):
+    def close_conection(self) -> None:
         self.conn_.close()
 
     def execute_query(self, query: str) -> None:
         self.cursor_.execute(query)
         self.conn_.commit()
 
-    def __del__(self):
+    def __del__(self) -> None:
         try:
             self.close_conection()
         except:
@@ -46,11 +46,12 @@ class MySQLDB:
 
 
 class FakeBookstoreCrawlerPipeline:
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_ = None
 
     def open_spider(self, spider: CrawlSpider) -> None:
-        logging.info("Spider opened from pipeline: %s" % spider.name)
+        logging.info(f"Spider opened from pipeline: {spider.name}")
+
         self.db_ = MySQLDB(HOST, USER, PASSWD, DB)
         self.db_.execute_query("""CREATE TABLE IF NOT EXISTS items (
                                     title varchar(255),
@@ -58,10 +59,13 @@ class FakeBookstoreCrawlerPipeline:
                                  );""")
 
     def close_spider(self, spider: CrawlSpider) -> None:
-        logging.info("Spider closed from pipeline: %s" % spider.name)
+        logging.info(f"Spider closed from pipeline: {spider.name}")
+
         self.db_.close_conection()
 
     def process_item(self, item: dict, spider: CrawlSpider) -> None:
-        self.db_.execute_query(
-            """INSERT INTO items (title, price)
-               VALUES ("{title}", "{price}");""".format(title=item["title"], price=item["price"]))
+        query = """
+            INSERT INTO items (title, price)
+            VALUES ("{title}", "{price}");""".format(title=item["title"], price=item["price"])
+
+        self.db_.execute_query(query)
