@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "fake-bookstore-scrapy"
+version = "0.1.0"
+description = "A simple crawler to scrape a fake bookstore"
+authors = ["mnowicka <mariola.nowicka19@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.9.17"
+scrapy = "2.9.0"
+mysqlclient = "2.2.0"
+twisted = "22.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
