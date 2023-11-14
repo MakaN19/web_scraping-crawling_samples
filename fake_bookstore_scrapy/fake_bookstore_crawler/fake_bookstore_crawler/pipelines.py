@@ -17,7 +17,7 @@ PASSWD = os.getenv("DB_PASSWD")
 DB = os.getenv("DB_NAME")
 
 
-class MySQLDB:
+class MySQLDBInstance:
     def __init__(self, host: str, user: str, passwd: str, db: str) -> None:
         self.conn_ = self.create_connection(host, user, passwd, db)
         self.cursor_ = self.conn_.cursor()
@@ -52,7 +52,7 @@ class FakeBookstoreCrawlerPipeline:
     def open_spider(self, spider: CrawlSpider) -> None:
         logging.info(f"Spider opened from pipeline: {spider.name}")
 
-        self.db_ = MySQLDB(HOST, USER, PASSWD, DB)
+        self.db_ = MySQLDBInstance(HOST, USER, PASSWD, DB)
         self.db_.execute_query("""CREATE TABLE IF NOT EXISTS items (
                                     title varchar(255),
                                     price varchar(255)
